@@ -3,10 +3,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from router import innovation, innovator, auth
 from database.database import engine
 from models import models
+from contextlib import asynccontextmanager
 
-models.Base.metadata.create_all(bind=engine)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: Create tables
+    models.Base.metadata.create_all(bind=engine)
+    yield
+    # Shutdown: cleanup if needed
 
-app = FastAPI()
+
+app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
