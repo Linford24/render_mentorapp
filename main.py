@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from router import innovation, innovator, auth
 from database.database import engine
 from models import models
@@ -30,3 +32,24 @@ app.include_router(innovator.router)
 @app.get("/")
 def root():
     return {"status": "ok"}
+
+# Mount static files directory
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
+
+# Serve frontend.html at root path
+@app.get("/")
+def landing_page():
+    return FileResponse("frontenf/frontend.html")
+
+# Catalog page
+@app.get("/catalog")
+def catalog():
+    return FileResponse("frontend/catalog.html")
+
+# Try page
+@app.get("/try")
+def try_page():
+    return FileResponse("frontend/try.html")
+
+
+
