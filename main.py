@@ -26,3 +26,7 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(innovation.router)
 app.include_router(innovator.router)
+
+@app.get("/")
+def root():
+    return {"status": "ok"}
