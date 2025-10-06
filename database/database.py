@@ -1,7 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+import os
 
-DATABASE_URL = "postgresql://lin:password@localhost:5432/lindb"
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://lin:G7jG7bnDn2VTxZjbAARNThnrCmFAGXnG@dpg-d3i3htbe5dus738psntg-a/tlce_db")
 
 engine = create_engine(DATABASE_URL, connect_args={'options': '-csearch_path=public'})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -12,4 +13,5 @@ def get_db():
     try:
         yield db
     finally:
+
         db.close()
