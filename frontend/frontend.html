@@ -732,7 +732,7 @@
                 }
 
                 
-                const url = "http://localhost:8000/api/innovators/new"
+                const url = "https://translence.onrender.com/api/innovators/new"
                 async function registerInnovator(url) {
                     const request = await fetch(url, {
                         method: "POST",
@@ -782,7 +782,7 @@
                 document.getElementById('loginSuccess').classList.add('bg-green-500');
                 document.getElementById('loginSuccess').textContent = "Login successful";
                 
-                const innovatorURL = `http://localhost:8000/api/innovators/get-innovator/${email}`
+                const innovatorURL = `https://translence.onrender.com/api/innovators/get-innovator/${email}`
                 async function getInnovatorData (innovatorURL) {
                     const requestData = await fetch(innovatorURL,
                         {
@@ -921,4 +921,5 @@
         });
     </script> 
 </body>
+
 </html>
