@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransLenCe - Building Technical Innovators</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f8f9ff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f8f9ff 100%);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .logo-icon {
+            width: 75px;
+            height: 40px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #10b891;
+        }
+
+        .nav-links a.internship {
+            color: #f59e0b;
+        }
+
+        .nav-links a.internship::before {
+            content: '🔥';
+            margin-right: 0.25rem;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .dropdown {
+            position: relative;
+        } 
+
+        .dropdown::after {
+            content: '▼';
+            margin-left: 0.25rem;
+            font-size: 0.8rem;
+        }
+
+        .register-btn {
+            background: #10b981;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .register-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .sign-in-btn {
+            background: #10b981;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sign-in-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #1f2937;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .hero .highlight {
+            color: #10b981;
+            text-decoration: underline;
+            text-decoration-color: #10b981;
+            text-decoration-thickness: 4px;
+            text-underline-offset: 8px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            padding: 0 7rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center
+        }
+
+        .btn-primary {
+            background: transparent;
+            color: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .btn-primary:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .btn-secondary:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Authentication Page Styles */
+        .auth-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 0 50px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 450px;
+            display: none;
+        }
+
+        .auth-container.active {
+            display: block;
+        }
+
+        .auth-header  {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header h2 {
+            color: #666;
+            font-size: 1.5rem;
+            }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 2px;
+            }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: none;
+            border: none;
+            border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+                color: #666;
+                transition: all 0.3s ease;
+            }
+
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            padding: 2px 0 0 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 2px 2px;
+            border: 2px solid #e1e5e9;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .back-btn {
+            width: 100%;
+            background: transparent;
+            color: #667eea;
+            padding: 5px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* Hero Image */
+        .hero-image {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+        }
+
+        .person-image {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .person-placeholder {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #34d399, #10b981);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 8rem;
+            font-weight: bold;
+        }
+
+        /* Animations/Floating Icons */
+        .floating-icon {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: float 6s ease-in-out infinite;
+            font-size: 1.5rem;
+        }
+
+        .floating-icon:nth-child(1) {
+            top: 20%;
+            right: 20%;
+            animation-delay: 1s;
+        }
+
+        .floating-icon:nth-child(2) {
+            top: 30%;
+            left: 15%;
+            animation-delay: 1s;
+        }
+
+        .floating-icon:nth-child(3) {
+            bottom: 20%;
+            left: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-icon:nth-child(4) {
+            bottom: 10%;
+            right: 25%;
+            animation-delay: 3s;
+        }
+
+        .floating-icon:nth-child(5) {
+            top: 35%;
+            right: 10%;
+            animation-delay: 4s;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+            66% {
+                transform: translateY(10px) rotate(-3deg);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+
+            .auth-container { padding: 2rem 1.5rem; }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .person-image {
+                width: 300px;
+                height: 300px;
+                margin-top: 2rem;
+            }
+
+            .person-placeholder {
+                width: 250px;
+                height: 250px;
+                font-size: 6rem;
+            }
+
+            .floating-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            background: white;
+            color: #333;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+        }
+
+        /* Hover effects */
+        .floating-icon:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .person-image:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div id="landingPage">
+      <nav>
+        <div class="logo">
+            <div class="logo-icon">TLCE</div>
+            TransLenCe
+        </div>
+        <ul class="nav-links">
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#research">Research</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#help">Help</a></li>
+            <li><a href="#blog">Blog</a></li>
+
+        </ul>
+        <div class="nav-right">
+            <button class="mobile-menu">☰</button>
+            <button class="sign-in-btn" onclick="showAuthPage()" >Sign In</button>
+        </div>
+      </nav>
+
+    <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-content">
+            <h1>
+                Learn to build innovative solutions<br>
+                <span class="highlight">in your field of interest</span>
+            </h1>
+            <p>
+                Master <em><strong>Technical Skills</strong></em> with just-in-time
+                    <strong>competitions</strong>, <strong>mentorship</strong>, <strong>resources</strong> and <strong>a vibrant community</strong>.
+            </p>
+        </div>
+        <div class="hero-image">
+            <div class="person-image">
+                <div class="person-placeholder">👨🏾‍💻</div>
+            </div> 
+            <!-- Floating Icons -->
+            <div class="floating-icon">📊</div>
+            <div class="floating-icon">🧬</div>
+            <div class="floating-icon">💻</div>
+            <div class="floating-icon">🔬</div>
+            <div class="floating-icon">📈</div>
+        </div>
+      </section>
+      <div class="hero-buttons">
+        <a href="#mentor" class="btn btn-secondary">Speak to a Mentor</a>
+        <a href="#start" class="btn btn-primary">Take a Course</a>
+      </div>
+    </div>
+
+    <!-- Register/ Log In Page -->
+    <div id="authPage" class="auth-container">
+        <div class="auth-header">
+            <h2>You are welcome to the world of innovation!</h2>
+        </div>
+
+        <div class="auth-tabs">
+            <button class="tab-btn active" onclick="switchTab('register')">Register</button>
+            <button class="tab-btn" onclick="switchTab('login')">Login</button>
+        </div>
+
+        <!-- Registration Form -->
+        <form id="registerForm" class="auth-form active">
+            <div class="form-group">
+                <label for="regName">Full Name</label>
+                <input type="text" id="regName" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="regEmail">Email Address</label>
+                <input type="email" id="regEmail" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="regPassword">Password</label>
+                <input type="password" id="regPassword" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="regConfirmPassword">Confirm Password</label>
+                <input type="password" id="regConfirmPassword" name="confirmPassword" required>
+            </div>
+            <div class="form-group">
+                <label for="regStatus">Status (Beginner, Intermediate, Advanced)</label>
+                <input type="status" id="regStatus" name="status" required>
+            </div>
+            <div class="form-group">
+                <label for="regLanguage">Languages Spoken</label>
+                <input type="language" id="regLanguage" name="language" required>
+            </div>
+            <button type="submit" class="submit-btn">Create Account</button>
+            <p id="creationSuccess"></p>
+        </form>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form">
+            <div class="form-group">
+                <label for="loginEmail">Email Address</label>
+                <input type="email" id="loginEmail" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" name="password" required>
+            </div>
+            <button type="submit" class="submit-btn">Sign In</button>
+            <div class="forgot-password">
+                <a href="#" onclick="showForgotPassword()">Forgot your password?</a>
+            </div>
+        </form>
+
+        <button class="back-btn" onclick="showLandingPage()">← Back to Home</button>
+        <p id="loginSuccess"></p>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        const signInBtn = document.querySelector('sign-in-btn');
+
+            
+        mobileMenu.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            });
+
+        function showAuthPage() {
+            const landingPage = document.getElementById('landingPage');
+            const authPage = document.getElementById('authPage');
+
+            landingPage.style.display = 'none';
+            authPage.classList.add('active', 'fade-in');
+            }
+
+        function showLandingPage() {
+            const landingPage = document.getElementById('landingPage');
+            const authPage = document.getElementById('authPage');
+
+            authPage.classList.remove('active');
+            landingPage.style.display = 'block';
+            landingPage.classList.add('fade-in');
+            }
+
+        // Tab switching
+        function switchTab(tabType) {
+            const registerForm = document.getElementById('registerForm');
+            const loginForm = document.getElementById('loginForm');
+            const tabBtns = document.querySelectorAll('.tab-btn');
+
+            // Remove active classes
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            registerForm.classList.remove('active');
+            loginForm.classList.remove('active');
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+
+            // Show corresponding form
+            if (tabType === 'register') {
+                registerForm.classList.add('active');
+            } else {
+                loginForm.classList.add('active');
+            }
+        }
+
+        // Form submission handlers 
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const fullname = document.getElementById('regName').value;
+                const email = document.getElementById('regEmail').value;
+                const password = document.getElementById('regPassword').value;
+                const status = document.getElementById('regStatus').value;
+                const language = document.getElementById('regLanguage').value;
+                const confirmPassword = document.getElementById('regConfirmPassword').value;
+                 
+                // Basic validation
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+
+                if (password.length < 6) {
+                    alert('Password must be at least 6 characters long!');
+                }
+
+                const registerData = {
+                    fullname, 
+                    email,
+                    password,
+                    status,
+                    language,
+                }
+
+                const currentUser = {
+                    fullname: fullname,
+                    email: email,
+                    status: status,
+                    language: language
+                }
+
+                
+                const url = "http://localhost:8000/api/innovators/new"
+                async function registerInnovator(url) {
+                    const request = await fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(registerData)
+                    })
+
+                    const response = await request.json();
+                    return "Your account has been successfully created!"
+                }
+
+                registerInnovator(url)
+                    .then((message) => {
+                        document.getElementById('creationSuccess').classList.add('bg-green-500');
+                        document.getElementById('creationSuccess').textContent = message;
+                    })
+                    .catch((error) => {
+                        console.error("Error creating user:", error);
+                        document.getElementById('creationSuccess').classList.add('bg-red-500');
+                        document.getElementById('creationSuccess').textContent = "Failed to create user. Please try again.";
+                    })
+                    
+
+                
+
+                // Clear form
+                this.reset();
+
+                // Optional: Switch to login tab
+                //switchTab('login');
+            });
+
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                // Basic Validation
+                if (!email || !password) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+
+                document.getElementById('loginSuccess').classList.add('bg-green-500');
+                document.getElementById('loginSuccess').textContent = "Login successful";
+                
+                const innovatorURL = `http://localhost:8000/api/innovators/get-innovator/${email}`
+                async function getInnovatorData (innovatorURL) {
+                    const requestData = await fetch(innovatorURL,
+                        {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        }
+                    );
+
+                    const responseData = await requestData.json();
+                    
+                    return JSON.stringify(responseData)
+                }
+                
+                const userData = getInnovatorData(innovatorURL)
+                        .then((message) => {
+                                document.getElementById('creationSuccess').classList.add('bg-green-500');
+                                document.getElementById('creationSuccess').textContent = message;
+                        })
+                    
+                        .catch((error) => {
+                                console.error("Error creating user:", error);
+                                document.getElementById('creationSuccess').classList.add('bg-red-500');
+                                document.getElementById('creationSuccess').textContent = "Failed to create user. Please try again.";
+                        })
+                localStorage.setItem('currentUser', userData);
+                localStorage.setItem('userName', userData.fullname);
+                localStorage.setItem('userEmail', userData.email);
+
+                window.location.href = "try.html"
+                // Clear form
+                //this.reset();
+            });
+
+        // Forgot password function
+        function showForgotPassword() {
+            const email = prompt('Please enter your email address: ');
+            if (email && email.includes('@')) {
+                alert('Password reset instructions have been sent to your email.');
+            } else if (email) {
+                    alert('Please enter a valid email address.');
+                }
+            }
+
+        // Add smooth transitions on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('fade-in')
+        });
+
+
+
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                console.log(`Navigating to: ${anchor}`);
+            });
+            });
+
+        // About page
+        document.querySelector('a[href="#about"]').addEventListener(
+            'click', () => {
+                alert("This is the about page") 
+            }
+        );
+
+        // Button interactions
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const buttonText = button.textContent;
+
+                // Add click animation
+                button.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    button.style.transform = '';
+                }, 150);
+
+                console.log(`${buttonText} button clicked!`);
+                alert(`${buttonText} - Feature coming soon!`)
+            });
+        });
+
+        // Sign in button
+        document.querySelector('.sign-in-btn').addEventListener('click', () => {
+            console.log('Sign In button clicked!');
+        });
+
+        // Add parallax effect to floating icons
+        window.addEventListener('mousemove', (e) => {
+                const icons = document.querySelectorAll('.floating-icon');
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+
+                icons.forEach((icon, index) => {
+                    const speed = (index + 1) * 0.5;
+                    const xPos = (x - 0.5) * speed;
+                    const yPos = (y - 0.5) * speed;
+
+                    icon.style.transform = `translate(${xPos}px, ${yPos}px)`;
+                });
+            });
+            
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', () => {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 50) {
+                    nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                    nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+                } else {
+                    nav.style.background = 'rgba(255, 255, 255, 0.9)';
+                    nav.style.boxShadow = 'none';
+                }
+            });
+
+        // Animate elements on page load
+        window.addEventListener('load', () => {
+                const heroContent = document.querySelector('.hero-content');
+                const heroImage = document.querySelector('.hero-image');
+
+                heroContent.style.opacity = '0';
+                heroContent.style.transform = 'translateX(-50px)';
+                heroImage.style.opacity = '0';
+                heroImage.style.transform = 'translateX(50px)';
+
+                setTimeout(() => {
+                   heroContent.style.transition = 'all 0.8s ease';
+                   heroImage.style.transition = 'all 0.8s ease';
+                   heroContent.style.opacity = '1';
+                   heroContent.style.transform = 'translateX(0)';
+                   heroImage.style.opacity = '1';
+                   heroImage.style.transform = 'translateX(0)';
+                }, 100);
+        });
+    </script> 
+</body>
+</html>
