@@ -37,7 +37,7 @@ def root():
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 # Serve frontend.html at root path
-@app.get("/")
+@app.get("/home")
 def landing_page():
     return FileResponse("frontenf/frontend.html")
 
