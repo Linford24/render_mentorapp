@@ -179,3 +179,4 @@ async def get_current_innovator(db: Session = Depends(get_db), current_innovator
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="An error occurred while retrieving the current innovator"
         )
+
