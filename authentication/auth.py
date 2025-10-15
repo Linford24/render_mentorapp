@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
-from models.models import Innovation as InnovationModel
+from models.models import Innovator as InnovatorModel
 from database.database import get_db
 from schema.schemas import Token, RefreshRequest
 from sqlalchemy.orm import Session
@@ -70,5 +70,6 @@ async def get_current_innovator(token: str = Depends(oauth2_scheme), db: Session
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"}
     )
+
 
     return verify_token(token, credentials_exception, db)
