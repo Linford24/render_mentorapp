@@ -20,7 +20,7 @@ def create_innovator(innovator_data: InnovatorCreate, db: Session) -> InnovatorR
         if existing_innovator_email:
             raise ValueError(f"Innovator with the email: {innovator_data.email} already exists")
         
-        hashed_password = hashing.Hash.bcrypt(innovator_data.password)
+        hashed_password = hashing.Hash.argon2(innovator_data.password)
         # Create new innovator
         new_innovator = InnovatorModel(
             fullname=innovator_data.fullname,
@@ -89,7 +89,7 @@ def update_innovator(email: str, innovator_data: InnovatorUpdate, db: Session, c
         if not existing_innovator:
             raise ValueError(f"Innovator by name {email} not found.")
         
-        hashed_password = hashing.Hash.bcrypt(innovator_data.password)
+        hashed_password = hashing.Hash.argon2(innovator_data.password)
         # Update innovator data
         existing_innovator.fullname = innovator_data.fullname
         existing_innovator.email = innovator_data.email
@@ -136,3 +136,4 @@ def delete_innovator(email: str, db: Session, current_innovator: InnovatorModel)
         db.rollback()
 
         raise ValueError(f"Error deleting innovator. Please check if the innovator {email} exists.")
+
