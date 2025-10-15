@@ -12,14 +12,14 @@ async def login(credentials: Login, db: Session = Depends(database.get_db)):
 
     if not innovator:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
+            status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Invalid Email: user with such email not found"
         )
 
     # Verification of the password 
     if not pwd_ctx.verify(credentials.password, innovator.hashed_password):
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
+            status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Incorrect password"
         )
 
@@ -43,4 +43,5 @@ async def login(credentials: Login, db: Session = Depends(database.get_db)):
         "refresh_token": refresh_token,
         "token_type": "bearer",
         "verification_token": verification_token
+
     }
