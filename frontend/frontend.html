@@ -725,13 +725,6 @@
                     alert('Passwords do not match!');
                     return;
                 }
-
-                const byteLimit = 72;
-                const byteLength = Buffer.byteLength(password, 'utf8');
-
-                if (byteLength > byteLimit) {
-                    throw new Error(`Password is too long. Max allowed length is ${byteLimit} bytes (was ${byteLength}).`);
-                }
             
                 if (password.length < 6) {
                     alert('Password must be at least 6 characters long!');
@@ -966,4 +959,5 @@
     </script> 
 </body>
 </html>
+
 
