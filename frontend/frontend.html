@@ -14,11 +14,6 @@
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #e3f2fd 0%, #f8f9ff 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
         }
 
         /* Navigation */
@@ -179,7 +174,7 @@
             flex-wrap: wrap;
         }
 
-        .btn {
+        .join-us-btn {
             padding: 1rem 2rem;
             border: 2px solid transparent;
             border-radius: 8px;
@@ -189,29 +184,36 @@
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
-            text-align: center
-        }
-
-        .btn-primary {
+            text-align: center;
             background: transparent;
             color: #3b82f6;
             border-color: #3b82f6;
         }
 
-        .btn-primary:hover {
+        .join-us-btn:hover {
             background: #3b82f6;
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
         }
 
-        .btn-secondary {
+        .mentor-btn {
+            padding: 1rem 2rem;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
             background: transparent;
             color: #3b82f6;
             border-color: #3b82f6;
         }
 
-        .btn-secondary:hover {
+        .mentor-btn:hover {
             background: #3b82f6;
             color: white;
             transform: translateY(-2px);
@@ -227,6 +229,7 @@
             box-shadow: 0 25px 50px rgba(0,0,0,0.2);
             width: 100%;
             max-width: 450px;
+            margin: 30px 300px 50px 500px;
             display: none;
         }
 
@@ -236,12 +239,13 @@
 
         .auth-header  {
             text-align: center;
-            margin-bottom: 0.5rem;
+            padding-top: 1.5rem;
         }
 
         .auth-header h2 {
             color: #666;
             font-size: 1.5rem;
+            margin-bottom: 1.5rem;
             }
 
         .auth-tabs {
@@ -326,7 +330,10 @@
         }
 
         .back-btn {
-            width: 100%;
+            top: 0px;
+            right: 900px;
+            position: absolute;
+            width: 10%;
             background: transparent;
             color: #667eea;
             padding: 5px;
@@ -345,7 +352,7 @@
 
         .forgot-password {
             text-align: center;
-            margin-top: 1rem;
+            padding-bottom: 2rem;
         }
 
         .forgot-password a {
@@ -444,6 +451,7 @@
             animation: fadeIn 0.5s ease-in;
         }
 
+      
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -541,8 +549,8 @@
             TransLenCe
         </div>
         <ul class="nav-links">
-            <li><a href="#courses">Courses</a></li>
-            <li><a href="#research">Research</a></li>
+            <li><a href="#courses">Hacks</a></li>
+            <li><a href="#research">Competitions</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#help">Help</a></li>
             <li><a href="#blog">Blog</a></li>
@@ -562,8 +570,12 @@
                 <span class="highlight">in your field of interest</span>
             </h1>
             <p>
-                Master <em><strong>Technical Skills</strong></em> with just-in-time
-                    <strong>competitions</strong>, <strong>mentorship</strong>, <strong>resources</strong> and <strong>a vibrant community</strong>.
+                At TransLenCe, you aren't constrained by courses.<br>
+                
+                Think <em>innovatively</em><br>
+                Build <em> boldly</em><br>
+                Solve the <em>problems around you.</em><br>
+                
             </p>
         </div>
         <div class="hero-image">
@@ -579,8 +591,8 @@
         </div>
       </section>
       <div class="hero-buttons">
-        <a href="#mentor" class="btn btn-secondary">Speak to a Mentor</a>
-        <a href="#start" class="btn btn-primary">Take a Course</a>
+        <a href="#mentor" class="mentor-btn">Speak to a Mentor</a>
+        <a class="join-us-btn" onclick="showAuthPage()">Join Us</a>
       </div>
     </div>
 
@@ -641,7 +653,7 @@
             </div>
         </form>
 
-        <button class="back-btn" onclick="showLandingPage()">← Back to Home</button>
+        <button class="back-btn" onclick="showLandingPage()">← </button>
         <p id="loginSuccess"></p>
     </div>
 
@@ -649,12 +661,14 @@
         // Mobile menu toggle
         const mobileMenu = document.querySelector('.mobile-menu');
         const navLinks = document.querySelector('.nav-links');
-        const signInBtn = document.querySelector('sign-in-btn');
-
+        const signInBtn = document.querySelector('.sign-in-btn');
+        
             
         mobileMenu.addEventListener('click', () => {
             navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
             });
+
+        
 
         function showAuthPage() {
             const landingPage = document.getElementById('landingPage');
@@ -767,7 +781,7 @@
                 //switchTab('login');
             });
 
-        document.getElementById('loginForm').addEventListener('submit', function (e) {
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
                 e.preventDefault();
 
                 const email = document.getElementById('loginEmail').value;
@@ -778,44 +792,67 @@
                     alert('Please fill in all fields');
                     return;
                 }
-
-                document.getElementById('loginSuccess').classList.add('bg-green-500');
-                document.getElementById('loginSuccess').textContent = "Login successful";
                 
-                const innovatorURL = `https://translence.onrender.com/api/innovators/get-innovator/${email}`
-                async function getInnovatorData (innovatorURL) {
-                    const requestData = await fetch(innovatorURL,
+                try {
+                    const loginUrl = "https://translence.onrender.com/api/auth/login";
+                    const loginResponse = await fetch(loginUrl,
+                            {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: `username=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+                        }
+                    );
+
+                    if (!loginResponse.ok) {
+                        throw new Error(`Login failed: ${loginResponse.status}`);
+                    }
+
+                    const loginData = await loginResponse.json();
+                    console.log('Login successful:', loginData);
+
+                    const dataUrl = `https://translence.onrender.com/api/innovators/get-innovator?email=${email}`;
+                    const userDataRequest = await fetch(dataUrl,
                         {
                             method: 'GET',
                             headers: {
-                                'Content-Type': 'application/json'
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${loginData.access_token}`
                             }
                         }
                     );
 
-                    const responseData = await requestData.json();
-                    
-                    return JSON.stringify(responseData)
-                }
-                
-                const userData = getInnovatorData(innovatorURL)
-                        .then((message) => {
-                                document.getElementById('creationSuccess').classList.add('bg-green-500');
-                                document.getElementById('creationSuccess').textContent = message;
-                        })
-                    
-                        .catch((error) => {
-                                console.error("Error creating user:", error);
-                                document.getElementById('creationSuccess').classList.add('bg-red-500');
-                                document.getElementById('creationSuccess').textContent = "Failed to create user. Please try again.";
-                        })
-                localStorage.setItem('currentUser', userData);
-                localStorage.setItem('userName', userData.fullname);
-                localStorage.setItem('userEmail', userData.email);
+                    if (!userDataRequest.ok) {
+                        throw new Error(`Failed to get user data: ${userDataRequest.status}`);
+                    }
 
-                window.location.href = "/try"
+                    const userDataResponse = await userDataRequest.json();
+                    localStorage.setItem('currentUser', userDataResponse);
+                    localStorage.setItem('userName', userDataResponse.fullname);
+                    localStorage.setItem('userEmail', userDataResponse.email);
+
+                    
+                    
+
+                    document.getElementById('creationSuccess').classList.remove('bg-red-500');
+                    document.getElementById('creationSuccess').classList.add('bg-green-500');
+                    document.getElementById('creationSuccess').textContent = 'Login successful!';
+                    
+                    
+                    
+                    window.location.href = "try"
+                   
+                    
+                } catch (error) {
+                    console.error("Error getting user data:", error);
+                    document.getElementById('creationSuccess').classList.remove('bg-green-500');
+                    document.getElementById('creationSuccess').classList.add('bg-red-500');
+                    document.getElementById('creationSuccess').textContent = 'Failed to get user data!';
+                }
+                                    
                 // Clear form
-                //this.reset();
+                this.reset();
             });
 
         // Forgot password function
@@ -921,6 +958,4 @@
         });
     </script> 
 </body>
-
 </html>
-
