@@ -1,7 +1,7 @@
 fastapi[standard]
 uvicorn[standard]
 python-jose[cryptography]
-passlib[bcrypt]
+passlib[argon2]
 python-multipart==0.0.20
 sqlalchemy
 psycopg2-binary
